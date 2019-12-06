@@ -1,0 +1,46 @@
+package com.sample
+
+import com.sample.DroolsTest.Show;
+
+rule "Init"
+	when
+	then
+		insert(new Show("Doctor Who"));
+		insert(new Show("Downtown Abbey"));
+		insert(new Show("30 Rock"));
+		insert(new Show("The Office"));
+		insert(new Show("The Walking Dead"));
+		insert(new Show("Community"));
+		insert(new Show("Once Upon a Time"));
+		insert(new Show("Louie"));
+		insert(new Show("Bob's Burgers"));
+		insert(new Show("Nashville"));
+		insert(new Show("Up All Night"));
+		insert(new Show("Raising Hope"));
+		insert(new Show("Veep"));
+		insert(new Show("New Girl"));
+		insert(new Show("Girls"));
+		insert(new Show("Boardwalk Empire"));
+		insert(new Show("Justified"));
+		insert(new Show("Parenthood"));
+		insert(new Show("Mad Men"));
+		insert(new Show("Game of Thrones"));
+		insert(new Show("Parks and Recreation"));
+		insert(new Show("Homeland"));
+		insert(new Show("The League"));
+		insert(new Show("Archer"));
+		insert(new Show("Smash"));
+		insert(new Show("Glee"));
+		insert(new Show("American Horror Story"));
+		insert(new Show("Breaking Bad"));
+		insert(new Show("Eastbound & Down"));
+		insert(new Show("2 Broke Girls"));
+		insert(new Show("Apt 23"));
+		insert(new Show("Modern Family"));
+		insert(new Show("Happy Endings"));
+		insert(new Show("How I Met Your Mother"));
+		insert(new Show("Portlandia"));
+		insert(new Show("Key & Peele"));
+		insert(new Show("Workaholics"));
+		insert(new Show("Grimm"));
+end
