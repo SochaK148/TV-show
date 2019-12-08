@@ -1,46 +1,589 @@
 package com.sample
 
-import com.sample.DroolsTest.Show;
+import java.util.ArrayList;
+import com.sample.DroolsTest.*;
+
+declare Question
+	question: String
+	answers: ArrayList
+	chosenAnswer: String
+end
 
 rule "Init"
 	when
 	then
-		insert(new Show("Doctor Who"));
-		insert(new Show("Downtown Abbey"));
-		insert(new Show("30 Rock"));
-		insert(new Show("The Office"));
-		insert(new Show("The Walking Dead"));
-		insert(new Show("Community"));
-		insert(new Show("Once Upon a Time"));
-		insert(new Show("Louie"));
-		insert(new Show("Bob's Burgers"));
-		insert(new Show("Nashville"));
-		insert(new Show("Up All Night"));
-		insert(new Show("Raising Hope"));
-		insert(new Show("Veep"));
-		insert(new Show("New Girl"));
-		insert(new Show("Girls"));
-		insert(new Show("Boardwalk Empire"));
-		insert(new Show("Justified"));
-		insert(new Show("Parenthood"));
-		insert(new Show("Mad Men"));
-		insert(new Show("Game of Thrones"));
-		insert(new Show("Parks and Recreation"));
-		insert(new Show("Homeland"));
-		insert(new Show("The League"));
-		insert(new Show("Archer"));
-		insert(new Show("Smash"));
-		insert(new Show("Glee"));
-		insert(new Show("American Horror Story"));
-		insert(new Show("Breaking Bad"));
-		insert(new Show("Eastbound & Down"));
-		insert(new Show("2 Broke Girls"));
-		insert(new Show("Apt 23"));
-		insert(new Show("Modern Family"));
-		insert(new Show("Happy Endings"));
-		insert(new Show("How I Met Your Mother"));
-		insert(new Show("Portlandia"));
-		insert(new Show("Key & Peele"));
-		insert(new Show("Workaholics"));
-		insert(new Show("Grimm"));
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		ans.add("No, but she thought she was");
+		ans.add("What do you mean, \"during\"?");
+		insert(new Question("Has a major character been pregnant during the show?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("Barely");
+		ans.add("No. These characters are so white, they're frightened of the Irish");
+		insert(new Question("Are there any black people?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		ans.add("Only if you count dazed employees");
+		insert(new Question("Have there been zombies?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Every so often");
+		ans.add("Never");
+		ans.add("Literally all the time");
+		insert(new Question("Roughly how often do people get shot?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Big time");
+		ans.add("No, thank God");
+		insert(new Question("Do the characters sing a lot?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Do the characters use cell phones?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes. Cars as luxurious as the woman you can never have.");
+		ans.add("Who needs a car when you can ride a DRAGON?");
+		insert(new Question("Do the characters use cars?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Do the characters play sports?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("No, nothing");
+		ans.add("Yes, almost everything");
+		ans.add("Only Walt's eyes, with the absolute corruption of his innermost soul");
+		insert(new Question("Is stuff haunted?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yeah...? That's a weird question");
+		ans.add("No, and frankly it started getting ridiculous four seasons ago");
+		insert(new Question("Do we know who everyone's mother is?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Are there kids on the show?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Is the show set in the Northeast?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Rich enough to be best friends with basically Oprah");
+		ans.add("Poor enough to be best friends with a roller skating homeless dude");
+		insert(new Question("Are the characters rich or poor?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		ans.add("Only if you count and ex-wife, amirite?");
+		insert(new Question("Is there an evil queen?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Do the characters work for some kind of government agency?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yep");
+		ans.add("Nope");
+		insert(new Question("Do the characters own apartments they definitely can't afford?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("You know it");
+		ans.add("Not unless you count James Van Der Beek");
+		ans.add("No but that would be ah-MAH-zing");
+		insert(new Question("3 words: Are there cupcakes?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("No, we're not");
+		ans.add("Nailed it");
+		insert(new Question("Are we talking about a sketch comedy?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yes, but I liked it before it was on Netflix");
+		ans.add("No");
+		insert(new Question("Is the show about hipsters?", ans, ""));
+		
+		ans = new ArrayList<>();
+		ans.add("Yeah, they shmeoooke a bewrl");
+		ans.add("No");
+		insert(new Question("Uh... is there weed?", ans, ""));
+end
+
+rule "Q"
+	when
+		q: Question( getChosenAnswer() == "" )
+	then
+		System.out.println(q.getQuestion());
+		q.setChosenAnswer( (String) q.getAnswers().get(0) );
+		update( q );
+		System.out.println(q.getChosenAnswer());
+end
+
+rule "Real Zombies"
+	when
+		q: Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "Yes")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Have there been real zombies?", ans, ""));
+end
+
+rule "Covers or original songs"
+	when
+		q: Question(getQuestion()=="Do the characters sing a lot?", getChosenAnswer() == "Big time")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Originals. Horrible, horrible originals.");
+		ans.add("Covers. Horrible, horrible covers.");
+		insert(new Question("Covers or original songs?", ans, ""));
+end
+
+rule "Real life sports or fantasy"
+	when
+		q: Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "Yes")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Fantasy");
+		ans.add("Real");
+		insert(new Question("Are the sports real life or just fantasy?", ans, ""));
+end
+
+rule "Diaper changing"
+	when
+		q: Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "Yes")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Unfortunately, yes");
+		ans.add("No");
+		insert(new Question("Could diaper changing be a legitimate plotline?", ans, ""));
+end
+
+rule "SPY agency"
+	when
+		q: Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "Yes")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Danger zone!");
+		ans.add("I'm not at liberty to disclose that. Unless we're sleeping together.");
+		ans.add("No");
+		insert(new Question("Do the characters work for a SPY agency?", ans, ""));
+end
+
+rule "Happy about pregnancy"
+	when
+		q: Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "No, but she thought she was")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("No");
+		ans.add("So happy she lizzed her pants");
+		insert(new Question("Was the character happy about her supposed pregnancy?", ans, ""));
+end
+
+rule "Because she's only a girl"
+	when
+		q: Question(getQuestion()=="Was the character happy about her supposed pregnancy?", getChosenAnswer() == "No")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Yes");
+		ans.add("No");
+		insert(new Question("Was the pregnancy assumption unwelcome because she's only a girl?", ans, ""));
+end
+
+rule "Adorkable"
+	when
+		q: Question(getQuestion()=="Was the pregnancy assumption unwelcome because she's only a girl?", getChosenAnswer() == "Yes")
+	then
+		ArrayList<String> ans = new ArrayList<>();
+		ans.add("No");
+		ans.add("Are you happy now commercials? We're using your dumb made-up word.");
+		insert(new Question("Was the supposedly pregnant girl adorkable?", ans, ""));
+end
+
+rule "Doctor Who"
+	when
+		q: Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "What do you mean, \"during\"?")
+	then
+		//Doctor Who
+end
+
+rule "Downtown Abbey"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "No. These characters are so white, they're frightened of the Irish")
+	then
+		//Downtown Abbey
+end
+
+rule "The Office"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "Only if you count dazed employees")
+	then
+		//The Office
+end
+
+rule "The Walking Dead"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been real zombies?", getChosenAnswer() == "Yes")
+	then
+		//The Walking Dead
+end
+
+rule "Community"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been real zombies?", getChosenAnswer() == "No")
+	then
+		//Community
+end
+
+rule "Boardwalk Empire"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Every so often")
+	then
+		//Boardwalk Empire
+end
+
+rule "Justified"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Literally all the time")
+	then
+		//Justified
+end
+
+rule "Parenthood"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Never")
+		Question(getQuestion()=="Do the characters sing a lot?", getChosenAnswer() == "No, thank God")
+	then
+		//Parenthood
+end
+
+rule "Glee"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Never")
+		Question(getQuestion()=="Covers or original songs?", getChosenAnswer() == "Covers. Horrible, horrible covers.")
+	then
+		//Glee
+end
+
+rule "Smash"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Never")
+		Question(getQuestion()=="Covers or original songs?", getChosenAnswer() == "Originals. Horrible, horrible originals.")
+	then
+		//Glee
+end
+
+rule "Game of Thrones"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters use cars?", getChosenAnswer() == "Who needs a car when you can ride a DRAGON?")
+	then
+		//Game of Thrones
+end
+
+rule "Mad Men"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters use cars?", getChosenAnswer() == "Yes. Cars as luxurious as the woman you can never have.")
+	then
+		//Mad Men
+end
+
+rule "The League"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are the sports real life or just fantasy?", getChosenAnswer() == "Fantasy")
+	then
+		//The League
+end
+
+rule "Eastbound & Down"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are the sports real life or just fantasy?", getChosenAnswer() == "Real")
+	then
+		//Eastbound & Down
+end
+
+rule "Breaking Bad"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "Only Walt's eyes, with the absolute corruption of his innermost soul")
+	then
+		//Breaking Bad
+end
+
+rule "American Horror Story"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "Yes, almost everything")
+	then
+		//American Horror Story
+end
+
+rule "Modern Family"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "No, nothing")
+		Question(getQuestion()=="Do we know who everyone's mother is?", getChosenAnswer() == "Yeah...? That's a weird question")
+	then
+		//Modern Family
+end
+
+rule "How I Met Your Mother"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "No, nothing")
+		Question(getQuestion()=="Do we know who everyone's mother is?", getChosenAnswer() ==  "No, and frankly it started getting ridiculous four seasons ago")
+	then
+		//How I Met Your Mother
+end
+
+rule "Bob's Burgers"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is there an evil queen?", getChosenAnswer() == "No")
+	then
+		//Bob's Burgers
+end
+
+rule "Once Upon a Time"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is there an evil queen?", getChosenAnswer() == "Yes")
+	then
+		//Once Upon a Time
+end
+
+rule "Louie"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is there an evil queen?", getChosenAnswer() == "Only if you count and ex-wife, amirite?")
+	then
+		//Louie
+end
+
+rule "Nashville"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Could diaper changing be a legitimate plotline?", getChosenAnswer() == "No")
+	then
+		//Nashville
+end
+
+rule "Up All Night"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Could diaper changing be a legitimate plotline?", getChosenAnswer() == "Unfortunately, yes")
+		Question(getQuestion()=="Are the characters rich or poor?", getChosenAnswer() == "Rich enough to be best friends with basically Oprah")
+	then
+		//Up All Night
+end
+
+rule "Raising Hope"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Could diaper changing be a legitimate plotline?", getChosenAnswer() == "Unfortunately, yes")
+		Question(getQuestion()=="Are the characters rich or poor?", getChosenAnswer() == "Poor enough to be best friends with a roller skating homeless dude")
+	then
+		//Raising Hope
+end
+
+rule "Parks and Recreation"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for a SPY agency?", getChosenAnswer() == "No")
+	then
+		//Parks and Recreation
+end
+
+rule "Archer"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for a SPY agency?", getChosenAnswer() == "Danger zone!")
+	then
+		//Archer
+end
+
+rule "Homeland"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for a SPY agency?", getChosenAnswer() == "I'm not at liberty to disclose that. Unless we're sleeping together.")
+	then
+		//Homeland
+end
+
+rule "2 Broke Girls"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Yep")
+		Question(getQuestion()=="3 words: Are there cupcakes?", getChosenAnswer() == "You know it")
+	then
+		//Homeland
+end
+
+rule "Apt 23"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Yep")
+		Question(getQuestion()=="3 words: Are there cupcakes?", getChosenAnswer() == "Not unless you count James Van Der Beek")
+	then
+		//Apt 23
+end
+
+rule "Happy Endings"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Yep")
+		Question(getQuestion()=="3 words: Are there cupcakes?", getChosenAnswer() == "No but that would be ah-MAH-zing")
+	then
+		//Happy Endings
+end
+
+rule "Portlandia"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Nope")
+		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "Nailed it")
+		Question(getQuestion()=="Is the show about hipsters?", getChosenAnswer() == "Yes, but I liked it before it was on Netflix")
+	then
+	//Portlandia
+end
+
+rule "Key & Peele"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Nope")
+		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "Nailed it")
+		Question(getQuestion()=="Is the show about hipsters?", getChosenAnswer() == "No")
+	then
+		//Key & Peele
+end
+
+rule "Workaholics"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Nope")
+		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "No, we're not")
+		Question(getQuestion()=="Uh... is there weed?", getChosenAnswer() == "Yeah, they shmeoooke a bewrl")
+	then
+		//Workaholics
+end
+
+rule "Grimm"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters work for some kind of government agency?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Nope")
+		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "No, we're not")
+		Question(getQuestion()=="Uh... is there weed?", getChosenAnswer() == "No")
+	then
+		//Grimm
+end
+
+rule "30 Rock"
+	when
+		Question(getQuestion()=="Was the character happy about her supposed pregnancy?", getChosenAnswer() == "So happy she lizzed her pants")
+	then
+		//30 Rock
+end
+
+rule "Veep"
+	when
+		Question(getQuestion()=="Was the pregnancy assumption unwelcome because she's only a girl?", getChosenAnswer() == "No")
+	then
+		//Veep
+end
+
+rule "Girls"
+	when
+		Question(getQuestion()=="Was the supposedly pregnant girl adorkable?", getChosenAnswer() == "No")
+	then
+		//Girls
+end
+
+rule "New Girl"
+	when
+		Question(getQuestion()=="Was the supposedly pregnant girl adorkable?", getChosenAnswer() == "Are you happy now commercials? We're using your dumb made-up word.")
+	then
+		//New Girl
 end
