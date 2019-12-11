@@ -1,6 +1,12 @@
 package com.sample;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
+import org.kie.api.runtime.KieSession;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -16,13 +22,17 @@ public class GUI {
 	private JTextPane textPane;
 	private ArrayList<JButton> buttons;
 	private String chosenAnswer;
+	private KieSession kSession;
 	
-	public GUI() {
-		this.width = 530;
+	public GUI(KieSession kSession) {
+		this.kSession = kSession;
+		
+		this.width = 520;
 		
 		this.frame = new JFrame("What TV show are you watching?");
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setSize(width, 240);
+		this.frame.setSize(width, 250);
+		this.frame.setResizable(false);
 		this.frame.setLayout(new FlowLayout());
 		
 		this.textPane = new JTextPane();
@@ -30,9 +40,20 @@ public class GUI {
 		this.textPane.setEditable(false);
 		this.textPane.setOpaque(false);
 		
+		StyledDocument doc = this.textPane.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+		
 		Font font = new Font("SansSerif", Font.BOLD, 16);
 		this.textPane.setFont(font);
 		
+		JTextPane emptyPane = new JTextPane();
+		emptyPane.setPreferredSize(new Dimension(width, 15));
+		emptyPane.setEditable(false);
+		emptyPane.setOpaque(false);
+		
+		this.frame.add(emptyPane, BorderLayout.NORTH);
 		this.frame.add(this.textPane, BorderLayout.NORTH);
 		
 		this.chosenAnswer = "";
@@ -79,6 +100,18 @@ public class GUI {
 		this.chosenAnswer = "";
 		    		
 		return answer;
+	}
+	
+	public void showResult(String result) throws InterruptedException
+	{
+		this.textPane.setText("\nYou're watching "+result+"!");
+		Font font = new Font("Serif", Font.BOLD|Font.ITALIC, 25);
+		this.textPane.setFont(font);
+		
+		this.drawButtons(null);
+		this.frame.setVisible(true);
+		
+		this.kSession.destroy();
 	}
 	
 }
