@@ -25,8 +25,8 @@ rule "Init"
 		insert(new Question("Is the show about hipsters?", ans, ""));
 		
 		ans = new ArrayList<>();
-		ans.add("No, we're not");
 		ans.add("Nailed it");
+		ans.add("No, we're not");
 		insert(new Question("Are we talking about a sketch comedy?", ans, ""));
 		
 		ans = new ArrayList<>();
@@ -72,8 +72,8 @@ rule "Init"
 		insert(new Question("Do we know who everyone's mother is?", ans, ""));
 		
 		ans = new ArrayList<>();
-		ans.add("No, nothing");
 		ans.add("Yes, almost everything");
+		ans.add("No, nothing");
 		ans.add("Only Walt's eyes, with the absolute corruption of his innermost soul");
 		insert(new Question("Is stuff haunted?", ans, ""));
 		
@@ -83,7 +83,8 @@ rule "Init"
 		insert(new Question("Do the characters play sports?", ans, ""));
 		
 		ans = new ArrayList<>();
-		ans.add("Yes. Cars as luxurious as the woman you can never have.");
+		ans.add("Yes");
+		ans.add("Not really");
 		ans.add("Who needs a car when you can ride a DRAGON?");
 		insert(new Question("Do the characters use cars?", ans, ""));
 		
@@ -122,14 +123,13 @@ rule "Init"
 		ans.add("What do you mean, \"during\"?");
 		insert(new Question("Has a major character been pregnant during the show?", ans, ""));
 		
-		
 end
 
 rule "Doctor Who"
 	when
 		q: Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "What do you mean, \"during\"?")
 	then
-		gui.questionHandler("You're watching Doctor Who", null);
+		gui.showResult("Doctor Who");
 end
 
 rule "Downtown Abbey"
@@ -137,7 +137,7 @@ rule "Downtown Abbey"
 		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "No. These characters are so white, they're frightened of the Irish")
 	then
-		gui.questionHandler("You're watching Downtown Abbey", null);
+		gui.showResult("Downtown Abbey");
 end
 
 rule "The Office"
@@ -146,7 +146,7 @@ rule "The Office"
 		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "Only if you count dazed employees")
 	then
-		gui.questionHandler("You're watching The Office", null);
+		gui.showResult("The Office");
 end
 
 rule "The Walking Dead"
@@ -155,7 +155,7 @@ rule "The Walking Dead"
 		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Have there been real zombies?", getChosenAnswer() == "Yes")
 	then
-		gui.questionHandler("You're watching The Walking Dead", null);
+		gui.showResult("The Walking Dead");
 end
 
 rule "Community"
@@ -164,7 +164,7 @@ rule "Community"
 		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Have there been real zombies?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Community", null);
+		gui.showResult("Community");
 end
 
 rule "Boardwalk Empire"
@@ -174,7 +174,7 @@ rule "Boardwalk Empire"
 		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Every so often")
 	then
-		gui.questionHandler("You're watching Boardwalk Empire", null);
+		gui.showResult("Boardwalk Empire");
 end
 
 rule "Justified"
@@ -184,7 +184,7 @@ rule "Justified"
 		Question(getQuestion()=="Have there been zombies?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Literally all the time")
 	then
-		gui.questionHandler("You're watching Justified", null);
+		gui.showResult("Justified");
 end
 
 rule "Parenthood"
@@ -195,7 +195,7 @@ rule "Parenthood"
 		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Never")
 		Question(getQuestion()=="Do the characters sing a lot?", getChosenAnswer() == "No, thank God")
 	then
-		gui.questionHandler("You're watching Parenthood", null);
+		gui.showResult("Parenthood");
 end
 
 rule "Glee"
@@ -206,7 +206,7 @@ rule "Glee"
 		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Never")
 		Question(getQuestion()=="Covers or original songs?", getChosenAnswer() == "Covers. Horrible, horrible covers.")
 	then
-		gui.questionHandler("You're watching Glee", null);
+		gui.showResult("Glee");
 end
 
 rule "Smash"
@@ -217,7 +217,7 @@ rule "Smash"
 		Question(getQuestion()=="Roughly how often do people get shot?", getChosenAnswer() == "Never")
 		Question(getQuestion()=="Covers or original songs?", getChosenAnswer() == "Originals. Horrible, horrible originals.")
 	then
-		gui.questionHandler("You're watching Smash", null);
+		gui.showResult("Smash");
 end
 
 rule "Game of Thrones"
@@ -227,7 +227,7 @@ rule "Game of Thrones"
 		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Do the characters use cars?", getChosenAnswer() == "Who needs a car when you can ride a DRAGON?")
 	then
-		gui.questionHandler("You're watching Game of Thrones", null);
+		gui.showResult("Game of Thrones");
 end
 
 rule "Mad Men"
@@ -235,9 +235,19 @@ rule "Mad Men"
 		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
 		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "No")
-		Question(getQuestion()=="Do the characters use cars?", getChosenAnswer() == "Yes. Cars as luxurious as the woman you can never have.")
+		Question(getQuestion()=="Do the characters use cars?", getChosenAnswer() == "Yes")
 	then
-		gui.questionHandler("You're watching Mad Men", null);
+		gui.showResult("Mad Men");
+end
+
+rule "The 100"
+	when
+		Question(getQuestion()=="Has a major character been pregnant during the show?", getChosenAnswer() == "Yes")
+		Question(getQuestion()=="Are there any black people?", getChosenAnswer() == "Barely")
+		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "No")
+		Question(getQuestion()=="Do the characters use cars?", getChosenAnswer() == "Not really")
+	then
+		gui.showResult("The 100");
 end
 
 rule "The League"
@@ -247,7 +257,7 @@ rule "The League"
 		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Are the sports real life or just fantasy?", getChosenAnswer() == "Fantasy")
 	then
-		gui.questionHandler("You're watching The League", null);
+		gui.showResult("The League");
 end
 
 rule "Eastbound & Down"
@@ -257,7 +267,7 @@ rule "Eastbound & Down"
 		Question(getQuestion()=="Do the characters use cell phones?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Are the sports real life or just fantasy?", getChosenAnswer() == "Real")
 	then
-		gui.questionHandler("You're watching Eastbound & Down", null);
+		gui.showResult("Eastbound & Down");
 end
 
 rule "Breaking Bad"
@@ -268,7 +278,7 @@ rule "Breaking Bad"
 		Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "Only Walt's eyes, with the absolute corruption of his innermost soul")
 	then
-		gui.questionHandler("You're watching Breaking Bad", null);
+		gui.showResult("Breaking Bad");
 end
 
 rule "American Horror Story"
@@ -279,7 +289,7 @@ rule "American Horror Story"
 		Question(getQuestion()=="Do the characters play sports?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "Yes, almost everything")
 	then
-		gui.questionHandler("You're watching American Horror Story", null);
+		gui.showResult("American Horror Story");
 end
 
 rule "Modern Family"
@@ -291,7 +301,7 @@ rule "Modern Family"
 		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "No, nothing")
 		Question(getQuestion()=="Do we know who everyone's mother is?", getChosenAnswer() == "Yeah...? That's a weird question")
 	then
-		gui.questionHandler("You're watching Modern Family", null);
+		gui.showResult("Modern Family");
 end
 
 rule "How I Met Your Mother"
@@ -303,7 +313,7 @@ rule "How I Met Your Mother"
 		Question(getQuestion()=="Is stuff haunted?", getChosenAnswer() == "No, nothing")
 		Question(getQuestion()=="Do we know who everyone's mother is?", getChosenAnswer() ==  "No, and frankly it started getting ridiculous four seasons ago")
 	then
-		gui.questionHandler("You're watching How I Met Your Mother", null);
+		gui.showResult("How I Met Your Mother");
 end
 
 rule "Bob's Burgers"
@@ -313,7 +323,7 @@ rule "Bob's Burgers"
 		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Is there an evil queen?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Bob's Burgers", null);
+		gui.showResult("Bob's Burgers");
 end
 
 rule "Once Upon a Time"
@@ -323,7 +333,7 @@ rule "Once Upon a Time"
 		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Is there an evil queen?", getChosenAnswer() == "Yes")
 	then
-		gui.questionHandler("You're watching Once Upon a Time", null);
+		gui.showResult("Once Upon a Time");
 end
 
 rule "Louie"
@@ -333,7 +343,7 @@ rule "Louie"
 		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "Yes")
 		Question(getQuestion()=="Is there an evil queen?", getChosenAnswer() == "Only if you count an ex-wife, amirite?")
 	then
-		gui.questionHandler("You're watching Louie", null);
+		gui.showResult("Louie");
 end
 
 rule "Nashville"
@@ -342,7 +352,7 @@ rule "Nashville"
 		Question(getQuestion()=="Is the show set in the Northeast?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Could diaper changing be a legitimate plotline?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Nashville", null);
+		gui.showResult("Nashville");
 end
 
 rule "Up All Night"
@@ -352,7 +362,7 @@ rule "Up All Night"
 		Question(getQuestion()=="Could diaper changing be a legitimate plotline?", getChosenAnswer() == "Unfortunately, yes")
 		Question(getQuestion()=="Are the characters rich or poor?", getChosenAnswer() == "Rich enough to be best friends with basically Oprah")
 	then
-		gui.questionHandler("You're watching Up All Night", null);
+		gui.showResult("Up All Night");
 end
 
 rule "Raising Hope"
@@ -362,7 +372,7 @@ rule "Raising Hope"
 		Question(getQuestion()=="Could diaper changing be a legitimate plotline?", getChosenAnswer() == "Unfortunately, yes")
 		Question(getQuestion()=="Are the characters rich or poor?", getChosenAnswer() == "Poor enough to be best friends with a roller skating homeless dude")
 	then
-		gui.questionHandler("You're watching Raising Hope", null);
+		gui.showResult("Raising Hope");
 end
 
 rule "Parks and Recreation"
@@ -371,7 +381,7 @@ rule "Parks and Recreation"
 		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Do the characters work for a SPY agency?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Parks and Recreation", null);
+		gui.showResult("Parks and Recreation");
 end
 
 rule "Archer"
@@ -380,7 +390,7 @@ rule "Archer"
 		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Do the characters work for a SPY agency?", getChosenAnswer() == "Danger zone!")
 	then
-		gui.questionHandler("You're watching Archer", null);
+		gui.showResult("Archer");
 end
 
 rule "Homeland"
@@ -389,7 +399,7 @@ rule "Homeland"
 		Question(getQuestion()=="Are there kids on the show?", getChosenAnswer() == "No")
 		Question(getQuestion()=="Do the characters work for a SPY agency?", getChosenAnswer() == "I'm not at liberty to disclose that. Unless we're sleeping together.")
 	then
-		gui.questionHandler("You're watching Homeland", null);
+		gui.showResult("Homeland");
 end
 
 rule "2 Broke Girls"
@@ -400,7 +410,7 @@ rule "2 Broke Girls"
 		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Yep")
 		Question(getQuestion()=="3 words: Are there cupcakes?", getChosenAnswer() == "You know it")
 	then
-		gui.questionHandler("You're watching 2 Broke Girls", null);
+		gui.showResult("2 Broke Girls");
 end
 
 rule "Apt 23"
@@ -411,7 +421,7 @@ rule "Apt 23"
 		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Yep")
 		Question(getQuestion()=="3 words: Are there cupcakes?", getChosenAnswer() == "Not unless you count James Van Der Beek")
 	then
-		gui.questionHandler("You're watching Apt 23", null);
+		gui.showResult("Apt 23");
 end
 
 rule "Happy Endings"
@@ -422,7 +432,7 @@ rule "Happy Endings"
 		Question(getQuestion()=="Do the characters own apartments they definitely can't afford?", getChosenAnswer() == "Yep")
 		Question(getQuestion()=="3 words: Are there cupcakes?", getChosenAnswer() == "No but that would be ah-MAH-zing")
 	then
-		gui.questionHandler("You're watching Happy Endings", null);
+		gui.showResult("Happy Endings");
 end
 
 rule "Portlandia"
@@ -434,7 +444,7 @@ rule "Portlandia"
 		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "Nailed it")
 		Question(getQuestion()=="Is the show about hipsters?", getChosenAnswer() == "Yes, but I liked it before it was on Netflix")
 	then
-		gui.questionHandler("You're watching Portlandia", null);
+		gui.showResult("Portlandia");
 end
 
 rule "Key & Peele"
@@ -446,7 +456,7 @@ rule "Key & Peele"
 		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "Nailed it")
 		Question(getQuestion()=="Is the show about hipsters?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Key & Peele", null);
+		gui.showResult("Key & Peele");
 end
 
 rule "Workaholics"
@@ -458,7 +468,7 @@ rule "Workaholics"
 		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "No, we're not")
 		Question(getQuestion()=="Uh... is there weed?", getChosenAnswer() == "Yeah, they shmeoooke a bewrl")
 	then
-		gui.questionHandler("You're watching Workaholics", null);
+		gui.showResult("Workaholics");
 end
 
 rule "Grimm"
@@ -470,35 +480,35 @@ rule "Grimm"
 		Question(getQuestion()=="Are we talking about a sketch comedy?", getChosenAnswer() == "No, we're not")
 		Question(getQuestion()=="Uh... is there weed?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Grimm", null);
+		gui.showResult("Grimm");
 end
 
 rule "30 Rock"
 	when
 		Question(getQuestion()=="Was the character happy about her supposed pregnancy?", getChosenAnswer() == "So happy she lizzed her pants")
 	then
-		gui.questionHandler("You're watching 30 Rock", null);
+		gui.showResult("30 Rock");
 end
 
 rule "Veep"
 	when
 		Question(getQuestion()=="Was the pregnancy assumption unwelcome because she's only a girl?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Veep", null);
+		gui.showResult("Veep");
 end
 
 rule "Girls"
 	when
 		Question(getQuestion()=="Was the supposedly pregnant girl adorkable?", getChosenAnswer() == "No")
 	then
-		gui.questionHandler("You're watching Girls", null);
+		gui.showResult("Girls");
 end
 
 rule "New Girl"
 	when
-		Question(getQuestion()=="Was the supposedly pregnant girl adorkable?", getChosenAnswer() == "Are you happy now commercials? We're using your dumb made-up word.")
+		Question(getQuestion()=="Was the supposedly pregnant girl adorkable?", getChosenAnswer() == "Yes... But why would you use this dumb made-up word?")
 	then
-		gui.questionHandler("You're watching New Girl", null);
+		gui.showResult("New Girl");
 end
 
 rule "Real Zombies"
@@ -547,8 +557,8 @@ rule "SPY agency"
 	then
 		ArrayList<String> ans = new ArrayList<>();
 		ans.add("Danger zone!");
-		ans.add("I'm not at liberty to disclose that. Unless we're sleeping together.");
 		ans.add("No");
+		ans.add("I'm not at liberty to disclose that. Unless we're sleeping together.");
 		insert(new Question("Do the characters work for a SPY agency?", ans, ""));
 end
 
@@ -577,12 +587,12 @@ rule "Adorkable"
 		q: Question(getQuestion()=="Was the pregnancy assumption unwelcome because she's only a girl?", getChosenAnswer() == "Yes")
 	then
 		ArrayList<String> ans = new ArrayList<>();
+		ans.add("Yes... But why would you use this dumb made-up word?");
 		ans.add("No");
-		ans.add("Are you happy now commercials? We're using your dumb made-up word.");
 		insert(new Question("Was the supposedly pregnant girl adorkable?", ans, ""));
 end
 
-rule "Q"
+rule "Question"
 	when
 		q: Question( getChosenAnswer() == "" )
 	then
