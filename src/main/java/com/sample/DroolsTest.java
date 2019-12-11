@@ -15,7 +15,8 @@ public class DroolsTest {
 	        KieServices ks = KieServices.Factory.get();
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
-
+        	GUI gui = new GUI();
+        	kSession.setGlobal("gui", gui);
             /*
             Message message = new Message();
             message.setMessage("Hello World");
@@ -26,22 +27,6 @@ public class DroolsTest {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-    }
-    
-    public static class Start {}
-
-    public static class Show {
-
-        private String title;
-        
-        public Show(String title) {
-        	this.title = title;
-        }
-        
-        public String getTitle(){
-        	return this.title;
-        }
-
     }
 
 }
